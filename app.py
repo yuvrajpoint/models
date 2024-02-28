@@ -38,6 +38,7 @@ def predict():
         
         # Render the HTML template with predictions
         return render_template('index.html', predictions=res1, predictions2=res2, accuracy=acc)
-
+'''
 if __name__ == '__main__':
     app.run(debug=True)
+'''
