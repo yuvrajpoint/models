@@ -8,17 +8,17 @@
 </head>
 <body>
     <div class="container">
-        <h1>Malware Detection</h1>
+        <h1>Malware Detection Model</h1>
         <form action="/predict" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".csv">
-            <button type="submit">Predict</button>
+            <input type="file" name="file" accept=".csv" class="input">
+            <button type="submit" class="predict">Predict</button>
         </form>
         {% if predictions %}
             <div class="result">
                 <h2>Predictions:</h2>
-                <p>{{ predictions }}</p>
-                <p>{{ predictions2 }}</p>
-                <p>{{ accuracy }}</p>
+                <p class="p1">{{ predictions }}</p>
+                <p class="p2">{{ predictions2 }}</p>
+                <p class="para3">{{ accuracy }}</p>
             </div>
         {% endif %}
     </div>
