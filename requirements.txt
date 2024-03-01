@@ -11,6 +11,7 @@ flatbuffers==23.5.26
 gast==0.5.4
 google-pasta==0.2.0
 grpcio==1.62.0
+gunicorn==21.2.0
 h5py==3.10.0
 idna==3.6
 itsdangerous==2.1.2
@@ -41,7 +42,8 @@ setuptools==69.1.1
 six==1.16.0
 tensorboard==2.16.2
 tensorboard-data-server==0.7.2
-tensorflow==2.7.0
+tensorflow==2.16.0rc0
+tensorflow-intel==2.16.0rc0
 termcolor==2.4.0
 threadpoolctl==3.3.0
 typing_extensions==4.10.0
@@ -50,4 +52,3 @@ urllib3==2.2.1
 Werkzeug==3.0.1
 wheel==0.42.0
 wrapt==1.16.0
-Gunicorn
