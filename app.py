@@ -2,6 +2,8 @@ from flask import Flask, render_template, request
 import joblib
 import pandas as pd
 import numpy as np
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
 import os
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 import tensorflow as tf
@@ -51,7 +53,3 @@ def predict():
         
         # Render the HTML template with predictions
         return render_template('index.html', predictions=res1, predictions2=res2, accuracy=acc)
-'''
-if __name__ == '__main__':
-    app.run(debug=True)
-'''
