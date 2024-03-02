@@ -20,36 +20,39 @@ def home():
     return render_template('index.html', predictions=None, predictions2=None, accuracy=None)
 
 @app.route('/predict', methods=['POST'])
+@app.route('/predict', methods=['POST'])
 def predict():
-    if request.method == 'POST':
-        # Get the uploaded file from the request
-        uploaded_file = request.files['file']
+    try:
+        if request.method == 'POST':
+            # Get the uploaded file from the request
+            uploaded_file = request.files['file']
 
-        # Read the uploaded file into a Pandas DataFrame
-        input_data = pd.read_csv(uploaded_file, sep='|')
+            # Read the uploaded file into a Pandas DataFrame
+            input_data = pd.read_csv(uploaded_file, sep='|')
 
-        # Extract features
-        x_new = input_data.drop(columns=['legitimate', 'Name', 'md5'], axis=1)
-        y_new = input_data['legitimate']
+            # Extract features
+            x_new = input_data.drop(columns=['legitimate', 'Name', 'md5'], axis=1)
+            y_new = input_data['legitimate']
 
-        # Preprocess the data for the CNN model
-        X_reshaped = np.expand_dims(x_new.values, axis=-1)
+            # Preprocess the data for the CNN model
+            X_reshaped = np.expand_dims(x_new.values, axis=-1)
 
-        # Make predictions using the model
-        predictions = (cnn_model.predict(X_reshaped) > 0.5).astype(int)
+            # Make predictions using the model
+            predictions = (cnn_model.predict(X_reshaped) > 0.5).astype(int)
 
-        # Calculating the accuracy 
-        test_loss, test_accuracy = cnn_model.evaluate(X_reshaped, y_new)
-        legit_count = 0
-        mal_count = 0
-        for i in predictions:
-            if (i == 1):
-                legit_count += 1
-            elif (i == 0):
-                mal_count += 1
-        res1 = "Total no. of legit files = " + str(legit_count)
-        res2 = " Total no. of malware files = " + str(mal_count)
-        acc = "Accuracy = " + str(test_accuracy)
-        
-        # Render the HTML template with predictions
-        return render_template('index.html', predictions=res1, predictions2=res2, accuracy=acc)
+            # Calculating the accuracy 
+            test_loss, test_accuracy = cnn_model.evaluate(X_reshaped, y_new)
+            legit_count = np.sum(predictions == 1)
+            mal_count = np.sum(predictions == 0)
+            res1 = "Total no. of legit files = " + str(legit_count)
+            res2 = "Total no. of malware files = " + str(mal_count)
+            acc = "Accuracy = " + str(test_accuracy)
+            
+            # Render the HTML template with predictions
+            return render_template('index.html', predictions=res1, predictions2=res2, accuracy=acc)
+
+    except Exception as e:
+        # Log the exception for debugging
+        print(f"Exception: {str(e)}")
+        # Render an error message in the HTML template
+        return render_template('index.html', error="An error occurred. Please try again.")
